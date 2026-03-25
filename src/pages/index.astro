@@ -1,19 +1,15 @@
 ---
-import EventGrid from '../components/EventGrid.astro';
-import Footer from '../components/Footer.astro';
-import Hero from '../components/Hero.astro';
-import Navbar from '../components/Navbar.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { eventHref, getSiteSettings, getSortedEvents } from '../lib/site';
+import { getSiteSettings } from '../lib/site';
 
-const [settings, events] = await Promise.all([getSiteSettings(), getSortedEvents()]);
+const settings = await getSiteSettings();
 const structuredData = [
 	{
 		'@context': 'https://schema.org',
 		'@type': 'WebSite',
 		name: 'ABGE GP',
 		url: 'https://abgegp.com/',
-		description: settings.description
+		description: 'ABGE GP 2026 coming soon.'
 	},
 	{
 		'@context': 'https://schema.org',
@@ -21,39 +17,52 @@ const structuredData = [
 		name: 'ABGE GP',
 		url: 'https://abgegp.com/',
 		image: 'https://abgegp.com/images/logo.png'
-	},
-	{
-		'@context': 'https://schema.org',
-		'@type': 'ItemList',
-		name: 'ABGE GP Race Weekend Events',
-		itemListElement: events.map((event, index) => ({
-			'@type': 'ListItem',
-			position: index + 1,
-			url: `https://abgegp.com${eventHref(event)}`,
-			name: event.data.title
-		}))
 	}
 ];
 ---
 
 <BaseLayout
-	title={settings.title}
-	description={settings.description}
-	image={settings.socialImage}
+	title="ABGE GP 2026 | Coming Soon"
+	description="ABGE GP 2026 coming soon."
+	image="/images/hero.jpg"
 	structuredData={structuredData}
 >
-	<Navbar
-		events={events}
-		reservationEmail={settings.reservationEmail}
-		dinnerMenuPath={settings.dinnerMenuPath}
-	/>
-	<main>
+	<main class="relative min-h-screen overflow-hidden bg-black">
+		<picture class="absolute inset-0 block h-full w-full">
+			<source media="(max-width: 767px)" srcset="/images/mobile-hero.jpg" />
+			<img
+				src="/images/hero.jpg"
+				alt="ABGE GP 2026 coming soon"
+				class="h-full w-full object-cover"
+			/>
+		</picture>
+
+		<div class="absolute inset-0 bg-black/28"></div>
+
 		<section class="sr-only">
-			<h1>{settings.title}</h1>
-			<p>{settings.description}</p>
+			<h1>ABGE GP 2026 Coming Soon</h1>
+			<p>ABGE GP 2026 coming soon.</p>
 		</section>
-		<Hero />
-		<EventGrid events={events} />
+
+		<section class="relative z-10 flex min-h-screen items-center justify-center px-6 py-16">
+			<div class="flex flex-col items-center gap-8 text-center">
+				<div class="flex items-center justify-center gap-5 sm:gap-8">
+					<img
+						src="/images/logo.png"
+						alt="ABGE GP Race Weekend"
+						class="h-10 w-auto sm:h-14 md:h-16 lg:h-20"
+					/>
+					<img
+						src="/favicon.svg"
+						alt="ABGE GP mark"
+						class="h-10 w-10 sm:h-14 sm:w-14 md:h-16 md:w-16 lg:h-20 lg:w-20"
+					/>
+				</div>
+
+				<p class="button-face text-3xl font-semibold uppercase tracking-[0.08em] text-white sm:text-4xl md:text-5xl">
+					2026 Coming Soon
+				</p>
+			</div>
+		</section>
 	</main>
-	<Footer settings={settings} />
 </BaseLayout>
