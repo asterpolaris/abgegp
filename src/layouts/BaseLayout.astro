@@ -5,26 +5,37 @@ interface Props {
 	title?: string;
 	description?: string;
 	image?: string;
+	ogType?: 'website' | 'article';
+	structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
 const {
 	title = "ABGE GP | Let's race again!",
 	description = "ABGE presents 'Let's race again'. Experience the best Montreal has to offer for the race weekend.",
-	image = '/images/og-image.jpg'
+	image = '/images/og-image.jpg',
+	ogType = 'website',
+	structuredData
 } = Astro.props;
 
 const siteUrl = Astro.site?.toString() ?? 'https://abgegp.com';
+const canonicalUrl = Astro.url.href;
 const socialImage = new URL(image, siteUrl).toString();
+const jsonLd = structuredData ? JSON.stringify(structuredData) : null;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-CA">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
-		<meta property="og:type" content="website" />
+		<meta name="robots" content="index, follow" />
+		<link rel="canonical" href={canonicalUrl} />
+		<meta property="og:locale" content="en_CA" />
+		<meta property="og:site_name" content="ABGE GP" />
+		<meta property="og:type" content={ogType} />
+		<meta property="og:url" content={canonicalUrl} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content={socialImage} />
@@ -35,6 +46,7 @@ const socialImage = new URL(image, siteUrl).toString();
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" type="image/png" href="/images/logo.png" />
 		<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+		{jsonLd && <script type="application/ld+json" set:html={jsonLd}></script>}
 		<title>{title}</title>
 	</head>
 	<body class="min-h-screen bg-black text-white antialiased">

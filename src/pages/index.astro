@@ -4,18 +4,54 @@ import Footer from '../components/Footer.astro';
 import Hero from '../components/Hero.astro';
 import Navbar from '../components/Navbar.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getSiteSettings, getSortedEvents } from '../lib/site';
+import { eventHref, getSiteSettings, getSortedEvents } from '../lib/site';
 
 const [settings, events] = await Promise.all([getSiteSettings(), getSortedEvents()]);
+const structuredData = [
+	{
+		'@context': 'https://schema.org',
+		'@type': 'WebSite',
+		name: 'ABGE GP',
+		url: 'https://abgegp.com/',
+		description: settings.description
+	},
+	{
+		'@context': 'https://schema.org',
+		'@type': 'Organization',
+		name: 'ABGE GP',
+		url: 'https://abgegp.com/',
+		image: 'https://abgegp.com/images/logo.png'
+	},
+	{
+		'@context': 'https://schema.org',
+		'@type': 'ItemList',
+		name: 'ABGE GP Race Weekend Events',
+		itemListElement: events.map((event, index) => ({
+			'@type': 'ListItem',
+			position: index + 1,
+			url: `https://abgegp.com${eventHref(event)}`,
+			name: event.data.title
+		}))
+	}
+];
 ---
 
-<BaseLayout title={settings.title} description={settings.description} image={settings.socialImage}>
+<BaseLayout
+	title={settings.title}
+	description={settings.description}
+	image={settings.socialImage}
+	structuredData={structuredData}
+>
 	<Navbar
 		events={events}
 		reservationEmail={settings.reservationEmail}
 		dinnerMenuPath={settings.dinnerMenuPath}
 	/>
 	<main>
+		<section class="sr-only">
+			<h1>{settings.title}</h1>
+			<p>{settings.description}</p>
+		</section>
 		<Hero />
 		<EventGrid events={events} />
 	</main>

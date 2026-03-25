@@ -4,7 +4,7 @@ import EventGrid from '../../components/EventGrid.astro';
 import Footer from '../../components/Footer.astro';
 import Navbar from '../../components/Navbar.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getSiteSettings, getSortedEvents } from '../../lib/site';
+import { eventHref, getSiteSettings, getSortedEvents } from '../../lib/site';
 
 export function getStaticPaths() {
 	return getSortedEvents().then((events) =>
@@ -22,12 +22,48 @@ interface Props {
 const { event } = Astro.props;
 const [settings, events] = await Promise.all([getSiteSettings(), getSortedEvents()]);
 const otherEvents = events.filter((item) => item.id !== event.id);
+const eventUrl = `https://abgegp.com${eventHref(event)}`;
+const reservationEmail = event.data.primaryReservationEmail || settings.reservationEmail;
+const structuredData: Record<string, unknown> = {
+	'@context': 'https://schema.org',
+	'@type': 'Event',
+	name: event.data.title,
+	description: event.data.descriptionEn,
+	startDate: event.data.dateISO.toISOString(),
+	eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+	eventStatus: 'https://schema.org/EventScheduled',
+	image: [`https://abgegp.com${event.data.image}`],
+	url: eventUrl,
+	location: {
+		'@type': 'Place',
+		name: 'Auberge Saint-Gabriel',
+		address: {
+			'@type': 'PostalAddress',
+			addressLocality: 'Montreal'
+		}
+	},
+	organizer: {
+		'@type': 'Organization',
+		name: 'ABGE GP',
+		url: 'https://abgegp.com/'
+	}
+};
+
+if (event.data.ticketUrl) {
+	structuredData.offers = {
+		'@type': 'Offer',
+		url: event.data.ticketUrl,
+		availability: 'https://schema.org/InStock'
+	};
+}
 ---
 
 <BaseLayout
 	title={`${event.data.title} | ABGE GP`}
 	description={event.data.descriptionEn}
 	image={event.data.image}
+	ogType="article"
+	structuredData={structuredData}
 >
 	<Navbar
 		events={events}
@@ -82,16 +118,24 @@ const otherEvents = events.filter((item) => item.id !== event.id);
 				</div>
 
 				<div class="flex flex-wrap gap-3">
+					{
+						event.data.ticketUrl ? (
+							<a
+								href={event.data.ticketUrl}
+								target="_blank"
+								rel="noreferrer"
+								class="button-face inline-flex bg-white px-4 py-2 text-[0.95rem] font-semibold uppercase tracking-[0.04em] text-black"
+							>
+								Buy Tickets
+							</a>
+						) : (
+							<span class="button-face inline-flex border border-white bg-white/10 px-4 py-2 text-[0.95rem] font-semibold uppercase tracking-[0.04em] text-white">
+								Tickets Coming Soon
+							</span>
+						)
+					}
 					<a
-						href={event.data.ticketUrl || '#'}
-						target={event.data.ticketUrl ? '_blank' : undefined}
-						rel={event.data.ticketUrl ? 'noreferrer' : undefined}
-						class="button-face inline-flex bg-white px-4 py-2 text-[0.95rem] font-semibold uppercase tracking-[0.04em] text-black"
-					>
-						Buy Tickets
-					</a>
-					<a
-						href={`mailto:${event.data.primaryReservationEmail || settings.reservationEmail}`}
+						href={`mailto:${reservationEmail}`}
 						class="button-face inline-flex border border-white px-4 py-2 text-[0.95rem] font-semibold uppercase tracking-[0.04em] text-white"
 					>
 						Reservation
