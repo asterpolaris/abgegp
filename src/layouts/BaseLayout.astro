@@ -1,0 +1,29 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = "ABGE GP | Let's race again!",
+	description = "ABGE presents 'Let's race again'. Experience the best Montreal has to offer for the race weekend."
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<title>{title}</title>
+	</head>
+	<body class="min-h-screen bg-black text-white antialiased">
+		<slot />
+	</body>
+</html>
