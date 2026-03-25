@@ -2,7 +2,65 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: public/images
-public_folder: /images
+media_folder: "public/images"
+public_folder: "/images"
 
-collections: []
+collections:
+  - name: "events"
+    label: "Events"
+    folder: "src/content/events"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    summary: "{{fields.title}}"
+    fields:
+      - { label: "Event Name", name: "title", widget: "string" }
+      - { label: "Date Display", name: "dateDisplay", widget: "string", hint: "Example: 21 MAI" }
+      - { label: "ISO Date", name: "dateISO", widget: "string", hint: "Use YYYY-MM-DD or full ISO datetime when order matters." }
+      - { label: "Day Label", name: "day", widget: "string" }
+      - { label: "Time", name: "time", widget: "string" }
+      - { label: "Time Detail", name: "timeDetail", widget: "string" }
+      - { label: "Category", name: "category", widget: "string", required: false }
+      - { label: "Description (French)", name: "descriptionFr", widget: "text" }
+      - { label: "Description (English)", name: "descriptionEn", widget: "text" }
+      - label: "Artists / DJs"
+        name: "artists"
+        widget: "list"
+        required: false
+        field: { label: "Artist", name: "artist", widget: "string" }
+      - { label: "Sponsor Highlight", name: "sponsorHighlight", widget: "string", required: false }
+      - { label: "Flyer Image", name: "image", widget: "image" }
+      - { label: "Ticket URL", name: "ticketUrl", widget: "string", required: false, hint: "Leave blank if tickets are not live yet." }
+      - label: "Special Notes"
+        name: "specialNotes"
+        widget: "list"
+        required: false
+        field: { label: "Note", name: "note", widget: "string" }
+      - { label: "Primary Reservation Email", name: "primaryReservationEmail", widget: "string", required: false }
+      - { label: "Secondary Reservation Email", name: "secondaryReservationEmail", widget: "string", required: false }
+      - { label: "Page Copy", name: "body", widget: "markdown", required: false }
+
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - label: "General"
+        name: "site"
+        file: "src/content/settings/site.json"
+        fields:
+          - { label: "Site Title", name: "title", widget: "string" }
+          - { label: "Site Description", name: "description", widget: "text" }
+          - { label: "Date Range Label", name: "dateRangeLabel", widget: "string" }
+          - { label: "Location", name: "location", widget: "string" }
+          - { label: "Hero Eyebrow", name: "heroEyebrow", widget: "string" }
+          - { label: "Hero Title", name: "heroTitle", widget: "string" }
+          - { label: "Hero Intro", name: "heroIntro", widget: "text" }
+          - { label: "Reservation Email", name: "reservationEmail", widget: "string" }
+          - { label: "Dinner Menu Path", name: "dinnerMenuPath", widget: "string" }
+          - { label: "Builder Name", name: "builderName", widget: "string" }
+          - { label: "Builder URL", name: "builderUrl", widget: "string" }
+          - { label: "Footer Note", name: "footerNote", widget: "string" }
+          - { label: "Social Image", name: "socialImage", widget: "image" }
+          - { label: "Ticket Policy (French)", name: "ticketPolicyFr", widget: "text" }
+          - { label: "Ticket Policy (English)", name: "ticketPolicyEn", widget: "text" }

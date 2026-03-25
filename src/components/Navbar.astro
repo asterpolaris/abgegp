@@ -1,3 +1,130 @@
-<nav class="w-full border-b border-white/10 bg-black/80 px-6 py-4 text-sm uppercase tracking-[0.24em] text-white">
-	Navigation placeholder
-</nav>
+---
+import type { CollectionEntry } from 'astro:content';
+import { eventHref } from '../lib/site';
+
+interface Props {
+	events: CollectionEntry<'events'>[];
+	reservationEmail: string;
+	dinnerMenuPath: string;
+	currentEventId?: string;
+}
+
+const { events, reservationEmail, dinnerMenuPath, currentEventId } = Astro.props;
+
+const navItems = [
+	{ href: dinnerMenuPath, label: 'Dinner Menu' },
+	{ href: `mailto:${reservationEmail}`, label: 'Reservation' },
+	...events.map((event) => ({
+		href: eventHref(event),
+		label: event.data.title,
+		active: currentEventId === event.id
+	}))
+];
+---
+
+<header class="w-full bg-black/98 px-3 py-3 sm:px-4">
+	<div class="mx-auto max-w-[1600px] rounded-full border border-white/8 px-4 py-2.5 sm:px-5">
+		<div class="flex items-center justify-between gap-4">
+			<a href="/" class="shrink-0">
+				<img src="/images/logo.png" alt="ABGE GP Race Weekend" class="h-7 w-auto sm:h-8" />
+			</a>
+
+			<nav class="nav-face hidden min-w-max items-center gap-4 text-[0.8rem] font-semibold uppercase tracking-[0.11em] text-white md:flex lg:gap-5 lg:text-[0.92rem]">
+				{navItems.map((item) => (
+					<a
+						href={item.href}
+						class:list={[
+							'border-b border-transparent hover:border-white/40',
+							item.active && 'border-[var(--accent)] text-[var(--accent)]'
+						]}
+					>
+						{item.label}
+					</a>
+				))}
+			</nav>
+
+			<button
+				type="button"
+				class="flex h-11 w-11 items-center justify-center text-white md:hidden"
+				data-menu-toggle
+				aria-expanded="false"
+				aria-controls="mobile-nav-overlay"
+				aria-label="Open navigation menu"
+			>
+				<span class="grid grid-cols-2 gap-1.5">
+					<span class="h-2.5 w-2.5 bg-white"></span>
+					<span class="h-2.5 w-2.5 bg-white"></span>
+					<span class="h-2.5 w-2.5 bg-white"></span>
+					<span class="h-2.5 w-2.5 bg-white"></span>
+				</span>
+			</button>
+		</div>
+	</div>
+</header>
+
+<div
+	id="mobile-nav-overlay"
+	class="fixed inset-0 z-[60] hidden bg-black px-6 py-5 text-white md:hidden"
+	data-menu-overlay
+>
+	<div class="flex h-full flex-col">
+		<div class="flex items-center justify-between">
+			<img src="/images/logo.png" alt="ABGE GP Race Weekend" class="h-8 w-auto" />
+			<button
+				type="button"
+				class="flex h-11 w-11 items-center justify-center text-white"
+				data-menu-close
+				aria-label="Close navigation menu"
+			>
+				<span class="relative block h-6 w-6">
+					<span class="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 rotate-45 bg-white"></span>
+					<span class="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 -rotate-45 bg-white"></span>
+				</span>
+			</button>
+		</div>
+
+		<nav class="nav-face flex flex-1 flex-col items-center justify-center gap-7 text-center text-[2.1rem] font-semibold uppercase leading-none tracking-[0.03em] text-white">
+			{navItems.map((item) => (
+				<a
+					href={item.href}
+					class:list={[item.active && 'text-[var(--accent)]']}
+					data-menu-link
+				>
+					{item.label}
+				</a>
+			))}
+		</nav>
+	</div>
+</div>
+
+<script>
+	const toggle = document.querySelector('[data-menu-toggle]');
+	const overlay = document.querySelector('[data-menu-overlay]');
+	const close = document.querySelector('[data-menu-close]');
+	const links = document.querySelectorAll('[data-menu-link]');
+
+	if (toggle instanceof HTMLButtonElement && overlay instanceof HTMLDivElement) {
+		const closeMenu = () => {
+			overlay.classList.add('hidden');
+			document.body.style.overflow = '';
+			toggle.setAttribute('aria-expanded', 'false');
+		};
+
+		const openMenu = () => {
+			overlay.classList.remove('hidden');
+			document.body.style.overflow = 'hidden';
+			toggle.setAttribute('aria-expanded', 'true');
+		};
+
+		toggle.addEventListener('click', () => {
+			if (overlay.classList.contains('hidden')) {
+				openMenu();
+			} else {
+				closeMenu();
+			}
+		});
+
+		close?.addEventListener('click', closeMenu);
+		links.forEach((link) => link.addEventListener('click', closeMenu));
+	}
+</script>

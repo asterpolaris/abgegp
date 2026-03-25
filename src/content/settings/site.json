@@ -1,0 +1,17 @@
+{
+  "title": "ABGE GP | Let's race again!",
+  "description": "ABGE presents \"Let's race again\". Experience the best Montreal has to offer for the race weekend.",
+  "dateRangeLabel": "May 21-24, 2026",
+  "location": "Auberge Saint-Gabriel, Montreal",
+  "heroEyebrow": "Montreal Race Weekend",
+  "heroTitle": "Let's race again.",
+  "heroIntro": "Four signature events. One long weekend of black-tie excess, after-hours momentum, and the city's fastest room.",
+  "reservationEmail": "grandprix@aubergesaint-gabriel.com",
+  "dinnerMenuPath": "/files/menu.pdf",
+  "builderName": "Asterpolaris Marketing",
+  "builderUrl": "http://asterpolaris.com",
+  "footerNote": "Race Weekend events by Auberge Saint-Gabriel",
+  "socialImage": "/images/og-image.jpg",
+  "ticketPolicyFr": "Toutes les ventes de billets sont définitives. Les billets ne sont ni remboursables ni échangeables. En achetant un billet, vous acceptez ces conditions.",
+  "ticketPolicyEn": "All ticket sales are final. Tickets are non-refundable and cannot be exchanged or returned. By purchasing a ticket, you agree to these terms."
+}

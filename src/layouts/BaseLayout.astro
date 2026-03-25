@@ -4,12 +4,17 @@ import '../styles/global.css';
 interface Props {
 	title?: string;
 	description?: string;
+	image?: string;
 }
 
 const {
 	title = "ABGE GP | Let's race again!",
-	description = "ABGE presents 'Let's race again'. Experience the best Montreal has to offer for the race weekend."
+	description = "ABGE presents 'Let's race again'. Experience the best Montreal has to offer for the race weekend.",
+	image = '/images/og-image.jpg'
 } = Astro.props;
+
+const siteUrl = Astro.site?.toString() ?? 'https://abgegp.com';
+const socialImage = new URL(image, siteUrl).toString();
 ---
 
 <!DOCTYPE html>
@@ -19,8 +24,16 @@ const {
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={socialImage} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={socialImage} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" type="image/png" href="/images/logo.png" />
 		<title>{title}</title>
 	</head>
 	<body class="min-h-screen bg-black text-white antialiased">

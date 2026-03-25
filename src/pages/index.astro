@@ -1,21 +1,23 @@
 ---
+import EventGrid from '../components/EventGrid.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import Navbar from '../components/Navbar.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getSiteSettings, getSortedEvents } from '../lib/site';
+
+const [settings, events] = await Promise.all([getSiteSettings(), getSortedEvents()]);
 ---
 
-<BaseLayout
-	title="ABGE GP | Let's race again!"
-	description="ABGE presents 'Let's race again'. Experience the best Montreal has to offer for the race weekend."
->
-	<main class="min-h-screen bg-black px-6 py-16 text-white">
-		<section class="mx-auto flex max-w-5xl flex-col gap-6">
-			<p class="text-sm uppercase tracking-[0.35em] text-red-500">Phase 1 Setup</p>
-			<h1 class="text-4xl font-semibold uppercase tracking-[0.12em] sm:text-6xl">
-				ABGE GP Migration Scaffold
-			</h1>
-			<p class="max-w-2xl text-base leading-7 text-zinc-300 sm:text-lg">
-				The shared Astro layout and Tailwind stylesheet are now wired. Homepage and event
-				components will be built in the next phase.
-			</p>
-		</section>
+<BaseLayout title={settings.title} description={settings.description} image={settings.socialImage}>
+	<Navbar
+		events={events}
+		reservationEmail={settings.reservationEmail}
+		dinnerMenuPath={settings.dinnerMenuPath}
+	/>
+	<main>
+		<Hero />
+		<EventGrid events={events} />
 	</main>
+	<Footer settings={settings} />
 </BaseLayout>

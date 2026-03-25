@@ -1,1 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
+
+:root {
+	--page-bg: #000;
+	--panel: #060606;
+	--text-primary: #fff;
+	--text-muted: rgba(255, 255, 255, 0.76);
+	--line: rgba(255, 255, 255, 0.12);
+	--accent: #c71f25;
+}
+
+html {
+	background: var(--page-bg);
+	color: var(--text-primary);
+}
+
+body {
+	margin: 0;
+	background:
+		radial-gradient(circle at top, rgba(199, 31, 37, 0.08), transparent 28%),
+		var(--page-bg);
+	color: var(--text-primary);
+	font-family: "Source Sans 3", sans-serif;
+}
+
+a {
+	transition:
+		opacity 160ms ease,
+		transform 160ms ease,
+		border-color 160ms ease,
+		background-color 160ms ease;
+}
+
+a:hover {
+	opacity: 0.88;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+}
+
+::selection {
+	background: rgba(199, 31, 37, 0.92);
+	color: #fff;
+}
+
+.nav-face,
+.button-face,
+.footer-face {
+	font-family: "Cormorant Garamond", serif;
+}
