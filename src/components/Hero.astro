@@ -1,12 +1,10 @@
 <section class="relative w-full bg-black">
-	<img
-		src="/images/mobile-hero.jpg"
-		alt="ABGE GP hero backdrop"
-		class="block h-auto w-full object-contain md:hidden"
-	/>
-	<img
-		src="/images/hero.jpg"
-		alt="ABGE GP hero backdrop"
-		class="hidden h-auto w-full object-contain md:block"
-	/>
+	<picture>
+		<source media="(max-width: 767px)" srcset="/images/mobile-hero.jpg" />
+		<img
+			src="/images/hero.jpg"
+			alt="ABGE GP hero backdrop"
+			class="block h-auto w-full object-contain"
+		/>
+	</picture>
 </section>
