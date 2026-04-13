@@ -45,22 +45,14 @@ const jsonLd = structuredData ? JSON.stringify(structuredData) : null;
 		<meta name="twitter:image" content={socialImage} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" type="image/png" href="/images/logo.png" />
-		<script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 		{jsonLd && <script type="application/ld+json" set:html={jsonLd}></script>}
 		<title>{title}</title>
 	</head>
 	<body class="min-h-screen bg-black text-white antialiased">
 		<slot />
 		<script is:inline>
-			if (window.netlifyIdentity) {
-				window.netlifyIdentity.on('init', (user) => {
-					if (!user) {
-						window.netlifyIdentity.on('login', () => {
-							window.location.href = '/admin/';
-						});
-					}
-				});
-				window.netlifyIdentity.init();
+			if (window.location.hash.match(/(invite|confirmation|recovery)_token=/)) {
+				window.location.href = '/admin/' + window.location.hash;
 			}
 		</script>
 	</body>
