@@ -1,0 +1,14 @@
+[debug] [2026-04-13T13:58:13.766Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-13T13:58:13.769Z] > authorizing via signed-in user (juan@jegantic.com)
+[debug] [2026-04-13T13:58:13.769Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-13T13:58:13.769Z] > authorizing via signed-in user (juan@jegantic.com)
+[debug] [2026-04-13T13:58:13.783Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-13T13:58:13.784Z] > authorizing via signed-in user (juan@jegantic.com)
+[debug] [2026-04-13T13:58:13.912Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-13T13:58:13.913Z] > authorizing via signed-in user (juan@jegantic.com)
+[debug] [2026-04-13T13:58:13.914Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-13T13:58:13.914Z] > authorizing via signed-in user (juan@jegantic.com)
+[debug] [2026-04-13T13:58:13.938Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-13T13:58:13.938Z] > authorizing via signed-in user (juan@jegantic.com)
+[debug] [2026-04-13T13:58:13.939Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-13T13:58:13.939Z] > authorizing via signed-in user (juan@jegantic.com)
