@@ -5,9 +5,56 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="robots" content="noindex" />
 		<title>ABGE GP Admin</title>
+		<style>
+			body {
+				margin: 0;
+				background: #000;
+				color: #fff;
+				font-family: system-ui, sans-serif;
+			}
+
+			.admin-shell {
+				padding: 1rem;
+			}
+		</style>
 	</head>
 	<body>
+		<div class="admin-shell" aria-hidden="true"></div>
 		<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 		<script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+		<script>
+			const signupLabelPattern = /(sign[\s-]*up|create account|register|new account)/i;
+
+			const hideSignupControls = (root = document) => {
+				root.querySelectorAll('a, button').forEach((element) => {
+					const label = (element.textContent || '').replace(/\s+/g, ' ').trim();
+
+					if (signupLabelPattern.test(label)) {
+						element.setAttribute('hidden', 'hidden');
+						element.setAttribute('aria-hidden', 'true');
+						element.style.display = 'none';
+					}
+				});
+			};
+
+			hideSignupControls();
+
+			const observer = new MutationObserver((mutations) => {
+				mutations.forEach((mutation) => {
+					mutation.addedNodes.forEach((node) => {
+						if (node instanceof HTMLElement) {
+							hideSignupControls(node);
+						}
+					});
+				});
+			});
+
+			observer.observe(document.body, { childList: true, subtree: true });
+
+			if (window.netlifyIdentity) {
+				window.netlifyIdentity.on('init', () => hideSignupControls());
+				window.netlifyIdentity.on('open', () => hideSignupControls());
+			}
+		</script>
 	</body>
 </html>
