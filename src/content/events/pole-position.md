@@ -14,7 +14,7 @@ artists:
   - Malek
   - Choby
   - Hilal
-image: /images/events/pole-position.jpg
+image: /images/events/ABGE 26 -DIMANCHE.jpg
 ticketUrl: ""
 specialNotes: []
 ---

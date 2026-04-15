@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { eventHref } from '../lib/site';
+import { eventCardHref } from '../lib/site';
 
 interface Props {
 	events: CollectionEntry<'events'>[];
@@ -15,7 +15,7 @@ const navItems = [
 	{ href: dinnerMenuPath, label: 'Dinner Menu' },
 	{ href: `mailto:${reservationEmail}`, label: 'Reservation' },
 	...events.map((event) => ({
-		href: eventHref(event),
+		href: eventCardHref(event),
 		label: event.data.title,
 		active: currentEventId === event.id
 	}))

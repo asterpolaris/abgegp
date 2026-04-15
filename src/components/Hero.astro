@@ -1,10 +1,25 @@
+---
+interface Props {
+	eyebrow: string;
+	title: string;
+}
+
+const { eyebrow, title } = Astro.props;
+---
+
 <section class="relative w-full bg-black">
 	<picture>
-		<source media="(max-width: 767px)" srcset="/images/mobile-hero.jpg" />
 		<img
-			src="/images/hero.jpg"
+			src="/images/HERO-BANNER.jpg"
 			alt="ABGE GP hero backdrop"
-			class="block h-auto w-full object-contain"
+			class="block min-h-[52vh] w-full object-cover md:min-h-0"
 		/>
 	</picture>
+	<div class="absolute inset-0 bg-black/38"></div>
+	<div class="absolute inset-0 flex items-center justify-center px-6 py-16 text-center">
+		<div class="button-face flex flex-col items-center gap-3 uppercase text-white sm:gap-5">
+			<p class="text-3xl font-semibold tracking-[0.08em] sm:text-5xl md:text-6xl">{eyebrow}</p>
+			<p class="text-2xl font-semibold tracking-[0.14em] sm:text-4xl md:text-5xl">{title}</p>
+		</div>
+	</div>
 </section>

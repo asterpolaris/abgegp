@@ -1,31 +1,39 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { eventHref } from '../lib/site';
+import { eventCardId } from '../lib/site';
 
 interface Props {
 	event: CollectionEntry<'events'>;
 }
 
 const { event } = Astro.props;
-const ctaHref = event.data.ticketUrl || eventHref(event);
 ---
 
-<article class="mx-auto flex w-full max-w-none flex-col items-center sm:max-w-[18rem] xl:max-w-[14rem]">
-	<a href={eventHref(event)} class="block w-full">
-		<div class="overflow-hidden border border-white/10 bg-[var(--panel)] shadow-[0_10px_40px_rgba(0,0,0,0.35)]">
-			<img
-				src={event.data.image}
-				alt={`${event.data.title} flyer`}
-				class="w-full object-cover transition-transform duration-300 hover:scale-[1.015]"
-			/>
-		</div>
-	</a>
-	<a
-		href={ctaHref}
-		target={event.data.ticketUrl ? '_blank' : undefined}
-		rel={event.data.ticketUrl ? 'noreferrer' : undefined}
-		class="button-face mt-4 inline-flex border border-white bg-white px-4 py-2 text-[0.94rem] font-semibold uppercase tracking-[0.05em] text-black hover:-translate-y-0.5"
-	>
-		Buy Tickets
-	</a>
+<article
+	id={eventCardId(event)}
+	class="mx-auto flex w-full max-w-none scroll-mt-28 flex-col items-center sm:max-w-[18rem] xl:max-w-[14rem]"
+>
+	<div class="w-full overflow-hidden border border-white/10 bg-[var(--panel)] shadow-[0_10px_40px_rgba(0,0,0,0.35)]">
+		<img
+			src={event.data.image}
+			alt={`${event.data.title} flyer`}
+			class="w-full object-cover"
+		/>
+	</div>
+	{
+		event.data.ticketUrl ? (
+			<a
+				href={event.data.ticketUrl}
+				target="_blank"
+				rel="noreferrer"
+				class="button-face mt-4 inline-flex border border-white bg-white px-4 py-2 text-[0.94rem] font-semibold uppercase tracking-[0.05em] text-black hover:-translate-y-0.5"
+			>
+				Buy Tickets
+			</a>
+		) : (
+			<span class="button-face mt-4 inline-flex cursor-not-allowed border border-white bg-white/10 px-4 py-2 text-[0.94rem] font-semibold uppercase tracking-[0.05em] text-white/82">
+				Tickets Coming Soon
+			</span>
+		)
+	}
 </article>

@@ -16,6 +16,10 @@ export async function getSiteSettings() {
 	return settingsEntry.data;
 }
 
-export function eventHref(event: Pick<CollectionEntry<'events'>, 'id'>) {
-	return `/events/${event.id}/`;
+export function eventCardId(event: Pick<CollectionEntry<'events'>, 'id'>) {
+	return `event-${event.id}`;
+}
+
+export function eventCardHref(event: Pick<CollectionEntry<'events'>, 'id'>) {
+	return `/#${eventCardId(event)}`;
 }

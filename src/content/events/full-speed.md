@@ -11,7 +11,7 @@ artists:
   - Mili (Toronto)
   - Mekki
   - The Vizys
-image: /images/events/full-speed.jpg
+image: /images/events/ABGE 26 -SAMEDI.jpg
 ticketUrl: ""
 specialNotes: []
 ---

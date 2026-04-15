@@ -13,7 +13,7 @@ artists:
   - Ekho
   - Tali Rose
 sponsorHighlight: Heineken
-image: /images/events/power-unit.jpg
+image: /images/events/ABGE 26 -VENDREDI.jpg
 ticketUrl: ""
 specialNotes: []
 ---
