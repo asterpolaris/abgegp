@@ -6,6 +6,7 @@
   NODE_VERSION = "22"
 
 [[redirects]]
-  from = "/admin/*"
-  to = "/admin/index.html"
-  status = 200
+  from = "/*"
+  to = "https://aubergesaint-gabriel.com/"
+  status = 301
+  force = true
